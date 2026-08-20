@@ -34,10 +34,11 @@ const WEDDING = {
 
   // ISO 8601 WITH offset. The offset is not optional — without it the
   // countdown silently shifts by the guest's own timezone.
-  // 9 Oct 2026, 8:00 PM, Africa/Cairo. Egypt observes DST (EEST, +03:00)
-  // through late October, so +03:00 is correct for this date — verified
-  // against the IANA tz database (zoneinfo), not assumed.
-  datetime: '2026-10-09T20:00:00+03:00',
+  // 10 Sep 2026, 8:00 PM, Africa/Cairo — day 10, month 9 (corrected from an
+  // earlier day/month mix-up). Egypt observes DST (EEST, +03:00) through
+  // late October, so +03:00 is correct for this date — verified against
+  // the IANA tz database (zoneinfo), not assumed.
+  datetime: '2026-09-10T20:00:00+03:00',
 
   // The wedding's own timezone. Everything printed on the page is rendered
   // in *this* zone, so a guest reading from Sydney still sees the date and

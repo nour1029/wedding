@@ -1376,17 +1376,6 @@ body.is-gated {
   height: auto;
 }
 
-/* The arch overlaps the photo's bottom corners. */
-.closing__arch {
-  position: absolute;
-  bottom: 0;
-  width: clamp(110px, 34vw, 240px);
-  height: clamp(80px, 24vw, 170px);
-}
-
-.closing__arch--start { left: 0; }
-.closing__arch--end   { right: 0; }
-
 /* ---------- 12.1 · Scaffold bands (Phase 0 only) ----------
    Placeholder styling so the skeleton is legible and scrollable.
    Every rule in this block gets deleted as its phase lands.
