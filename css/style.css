@@ -862,41 +862,29 @@ body.is-gated {
   margin: 0 auto var(--space-3);
 }
 
-/* The reference sets these at a flat 41px / 21px (line-height 43 / 26) at
-   every viewport — its layout is a fixed 1200px canvas, so nothing about
-   it is fluid. Matched as a ceiling that only small phones scale back
-   from, rather than a hard px value that would overflow a 320px screen:
-   both hit the reference's exact size from ~390px up. The site's own
-   --t-script-md / --t-body are deliberately not used here; they are a
-   whole step smaller (25px / 14px on a phone) and left this section
-   looking half the weight of the reference. */
+/* The reference sets this at a flat 21px (line-height 26) at every
+   viewport — its layout is a fixed 1200px canvas, so nothing about it is
+   fluid. Matched as a ceiling that only small phones scale back from,
+   rather than a hard px value that would overflow a 320px screen: it hits
+   the reference's exact size from ~390px up. */
 .invite {
-  --invite-script: clamp(1.9rem, 10.5vw, 2.5625rem);  /* → 41px */
-  --invite-body:   clamp(1rem, 5.4vw, 1.3125rem);     /* → 21px */
+  --invite-body: clamp(1rem, 5.4vw, 1.3125rem);  /* → 21px */
 }
 
-.invite__line {
-  font-family: "Imperial Script", var(--font-script);
-  color: #A67D2B;
-  font-size: var(--invite-script);
-  line-height: 1.05;
+/* Same width logic as .bismillah — sized a little narrower since the ayah
+   excerpt is a single short line rather than a full basmalah phrase. */
+.invite__ayah {
+  display: block;
+  width: calc(0.42 * (100% + 2 * var(--space-3)));
+  height: auto;
+  margin: 0 auto var(--space-4);
 }
-
-.invite__line:last-of-type { margin-bottom: var(--space-3); }
 
 .invite__greeting {
   color: #6A5140;
   font-size: var(--invite-body);
-  line-height: 1.24;
+  line-height: 1.5;
   letter-spacing: 0.02em;
-  margin-bottom: var(--space-1);
-}
-
-.invite__body {
-  color: #6A5140;
-  font-size: var(--invite-body);
-  line-height: 1.24;
-  text-wrap: pretty;
 }
 
 /* Two halves of one floral swag across the card's top: flush to each
