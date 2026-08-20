@@ -565,6 +565,10 @@ Measured: 818×1280 at scale 1.000 on a 1470px window, 390×610 at 390px.
 
 # Link preview (Open Graph / Twitter Card)
 
+> **Branch note:** on `mohamed-tamer`, `og-image.jpg` is a different photo —
+> see "Mohamed & Sohila's link preview" further down. Everything else on
+> this page describes the file as it exists on `master`, for Mazen & Shams.
+
 | File | Origin |
 |---|---|
 | `og-image.jpg` | `_source/og-image-childhood-with-link-icon-original.jpg`, supplied ready-cropped |
@@ -679,3 +683,23 @@ from GitHub Pages (bypassing DNS, hit its IP directly with the right Host
 header): `200`, `image/jpeg`, exactly 1200×630. Public testing is still
 blocked on a Hostinger parking page intercepting the domain itself — see
 `PLAN.md` Phase 16.
+
+---
+
+# Mohamed & Sohila's link preview (`mohamed-tamer` branch only)
+
+| File | Origin |
+|---|---|
+| `og-image.jpg` | Supplied for this branch, already 1200×630 |
+| `_source/og-image-mohamed-with-link-icon-original.png` | As supplied, before encoding |
+
+Overwrites `og-image.jpg`, same filename Mazen & Shams's link preview uses
+on `master` — no code change needed. Supplied ready-cropped at exactly
+1200×630 with a link-share icon already baked over the centre (the same
+kind of macOS share-link watermark seen on `master`'s own OG image);
+installed as-is, per request, no cropping or icon removal. Re-encoded
+straight to JPEG q92 (RGB, no transparency to preserve): 87KB.
+
+`og:url`, `og:image`, and `twitter:image` in `index.html` point at
+`https://nour1029.github.io/mohamed-sohila-invitation/…` — this branch's
+own deployment (see the top-level project notes), not solinvitations.com.
