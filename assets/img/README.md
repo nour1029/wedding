@@ -710,22 +710,22 @@ own deployment (see the top-level project notes), not solinvitations.com.
 
 | File | Origin |
 |---|---|
-| `ayah.png` | Extracted from a supplied calligraphy image, 512×92 |
-| `_source/ayah-original.png` | As supplied |
+| `_source/ayah-original.png` | The calligraphy image the text below was read off of |
 
-Surah Ar-Rum 30:21 (excerpt) — "وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً",
-"...and He placed between you affection and mercy..." — the verse almost
-every Arabic wedding invitation opens with. Replaces the reference's own
-English "Two Souls / One destiny / A Lifetime written by Allah" lines in
-the Bismillah card, which are dropped entirely along with the rest of the
-English in that section (per request — this card is Arabic-only now).
+Surah Ar-Rum 30:21 (excerpt) — "...and He placed between you affection and
+mercy..." — the verse almost every Arabic wedding invitation opens with.
+Replaces the reference's own English "Two Souls / One destiny / A Lifetime
+written by Allah" lines in the Bismillah card, which are dropped entirely
+along with the rest of the English in that section (per request — this
+card is Arabic-only now).
 
-The supplied image wasn't a transparent cutout — it was a calligraphy
-photo on an opaque near-white ground (`~rgb(240,236,231)`, flat with
-mild JPEG noise, no texture to preserve). Same ink-over-paper
-un-compositing as `venue-building.png` (see "Extracting the art" above),
-solving `C = A·F + (1−A)·B` per pixel for a sampled paper colour, then
-cropped to the ink's own opaque bounds (512×92 → 448×76) and quantised to
-64 colours (27KB → 6.6KB). Sits on the card transparently, same as
-`bismillah.png`, at 42% of the card's width — a little narrower than the
-basmalah's 49%, since this is one short line rather than a full phrase.
+**Shipped as live text (`.invite__ayah` in `index.html`), not an image.**
+It briefly existed as `ayah.png` — the calligraphy photo un-composited the
+same way `venue-building.png` was (ink-over-paper, `C = A·F + (1−A)·B`) —
+but was then replaced with the verse itself set in Amiri (already loaded
+for the Bismillah's diacritics) once asked to extract the text rather than
+ship it as a picture. `ayah.png` no longer exists; `_source/
+ayah-original.png` is kept as the record of what the text was read off of.
+Ink colour (`#2A1B0D`) was sampled from the original image's darkest
+stroke pixel rather than reused from the site's gold palette, since this
+reads as ink on paper rather than as a gilded heading.
