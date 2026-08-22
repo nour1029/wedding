@@ -701,6 +701,13 @@ body.is-gated {
   margin-top: 0.35em;
 }
 
+.hero__time {
+  font-size: 3.6cqw;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  margin-top: 0.2em;
+}
+
 .hero__names {
   top: 33%;
   font-size: 15.5cqw;
