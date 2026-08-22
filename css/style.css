@@ -684,9 +684,10 @@ body.is-gated {
 
 .hero__words { top: 16.4%; }
 
-/* Amiri, not .script's Pinyon Script — matches the ayah's font (see
-   .invite__ayah) rather than the cursive Latin face, which has no Arabic
-   glyphs to fall back on cleanly. Aref Ruqaa was tried here and reverted. */
+/* hero__words' three lines on a single modular scale (~1.3 ratio) rather
+   than arbitrary sizes: title largest as the heading, date and time equal
+   since they're both just event details — time was previously a full
+   step smaller than date, which read as an afterthought under it. */
 .hero__eyebrow {
   font-family: "Amiri", serif;
   color: var(--gold);
@@ -694,19 +695,15 @@ body.is-gated {
   line-height: 1;
 }
 
-.hero__date {
-  font-size: 4.6cqw;
+.hero__date,
+.hero__time {
+  font-size: 4.4cqw;
   letter-spacing: 0.04em;
   color: var(--gold);
-  margin-top: 0.35em;
 }
 
-.hero__time {
-  font-size: 3.6cqw;
-  letter-spacing: 0.04em;
-  color: var(--gold);
-  margin-top: 0.2em;
-}
+.hero__date { margin-top: 0.35em; }
+.hero__time { margin-top: 0.25em; }
 
 .hero__names {
   top: 33%;
