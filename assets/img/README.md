@@ -729,3 +729,54 @@ ayah-original.png` is kept as the record of what the text was read off of.
 Ink colour (`#2A1B0D`) was sampled from the original image's darkest
 stroke pixel rather than reused from the site's gold palette, since this
 reads as ink on paper rather than as a gilded heading.
+
+---
+
+# The venue artwork (`mohamed-tamer` branch only)
+
+| File | Origin |
+|---|---|
+| `venue-building.png` | Supplied for this branch — Romanica Wedding Hall |
+| `_source/venue-romanica-original.png` | As supplied, 1810×869 |
+
+Overwrites `venue-building.png`, the same filename the Laveora line
+drawing used, so no code change was needed beyond the `alt` text. This
+also retires the last piece of Mazen & Shams's venue on this branch: the
+heading and address had already been switched to Romanica, but the
+artwork still had "LAVEORA WEDDING HALL" drawn into it, since that's
+pixels rather than live text.
+
+## The transparency was fake
+
+The supplied PNG **looked** transparent — it carried the usual grey/white
+checkerboard — but it was mode `RGB` with no alpha at all. The
+checkerboard was baked in as literal pixels (alternating `rgb(237,237,237)`
+and near-white), so dropping it in as-is would have put a grey checkerboard
+rectangle on the card. Recovered like this:
+
+1. Mark pixels that are near-neutral (channel spread ≤ 14) **and** light
+   (min channel ≥ 222) — the building is saturated gold and dark brown, so
+   saturation separates it from the checkerboard cleanly.
+2. Flood-fill that mask inward from the border, and treat **only** the
+   region connected to the edge as background. Without this step, light
+   neutral pixels *inside* the building would be punched out too. 124
+   interior pixels were protected this way.
+3. Erode the foreground by 1px: the outermost ring is really a blend with
+   the checkerboard, and keeping it leaves a pale fringe.
+4. Resize 1810×869 → 1108×532 with **premultiplied** alpha, so transparent
+   pixels can't bleed their colour into the edges during resampling (the
+   classic halo). Verified against magenta: no pale fringe anywhere.
+
+Then quantised to 96 colours, the same treatment the Laveora drawing had:
+753KB → **101KB** (slightly smaller than the 189KB file it replaces).
+
+The source is 1810×869 and the target 1108×532 — both 2.083:1, so the
+aspect ratio is unchanged and no CSS or `width`/`height` attribute needed
+touching.
+
+**Note on style:** this artwork is solid saturated gold, where the Laveora
+drawing was a pale line drawing whose stone was a transparent wash picking
+up the card's own paper. It reads considerably heavier on the cream card
+than its predecessor did. That's inherent to the supplied art, not the
+extraction — worth knowing if it ever looks too dominant next to the
+lighter Bismillah card above it.
