@@ -686,7 +686,7 @@ body.is-gated {
 
 /* Amiri, not .script's Pinyon Script — matches the ayah's font (see
    .invite__ayah) rather than the cursive Latin face, which has no Arabic
-   glyphs to fall back on cleanly. */
+   glyphs to fall back on cleanly. Aref Ruqaa was tried here and reverted. */
 .hero__eyebrow {
   font-family: "Amiri", serif;
   color: var(--gold);
