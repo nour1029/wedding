@@ -737,46 +737,74 @@ reads as ink on paper rather than as a gilded heading.
 | File | Origin |
 |---|---|
 | `venue-building.png` | Supplied for this branch — Romanica Wedding Hall |
-| `_source/venue-romanica-original.png` | As supplied, 1810×869 |
+| `_source/venue-romanica-original.png` | As supplied, 1808×870 |
 
-Overwrites `venue-building.png`, the same filename the Laveora line
-drawing used, so no code change was needed beyond the `alt` text. This
-also retires the last piece of Mazen & Shams's venue on this branch: the
-heading and address had already been switched to Romanica, but the
-artwork still had "LAVEORA WEDDING HALL" drawn into it, since that's
-pixels rather than live text.
+Overwrites `venue-building.png`, the same filename the Laveora line drawing
+used, so no code change was needed beyond the `alt` text. This retires the
+last piece of the previous couple's venue on this branch: the heading and
+address were already Romanica, but the artwork still had "LAVEORA WEDDING
+HALL" drawn into it, since that's pixels rather than live text.
 
-## The transparency was fake
+## Extraction: ink over paper, same as the drawing it replaces
 
-The supplied PNG **looked** transparent — it carried the usual grey/white
-checkerboard — but it was mode `RGB` with no alpha at all. The
-checkerboard was baked in as literal pixels (alternating `rgb(237,237,237)`
-and near-white), so dropping it in as-is would have put a grey checkerboard
-rectangle on the card. Recovered like this:
+The supplied file is opaque RGB on a flat neutral ground (~`rgb(229,229,229)`),
+with a 2px near-black frame on the left, right and bottom edges (not the
+top) — cropped off first, giving 1804×868.
 
-1. Mark pixels that are near-neutral (channel spread ≤ 14) **and** light
-   (min channel ≥ 222) — the building is saturated gold and dark brown, so
-   saturation separates it from the checkerboard cleanly.
-2. Flood-fill that mask inward from the border, and treat **only** the
-   region connected to the edge as background. Without this step, light
-   neutral pixels *inside* the building would be punched out too. 124
-   interior pixels were protected this way.
-3. Erode the foreground by 1px: the outermost ring is really a blend with
-   the checkerboard, and keeping it leaves a pale fringe.
-4. Resize 1810×869 → 1108×532 with **premultiplied** alpha, so transparent
-   pixels can't bleed their colour into the edges during resampling (the
-   classic halo). Verified against magenta: no pale fringe anywhere.
+The building is then recovered with the **same un-compositing** used for the
+Laveora drawing and the ayah (see "Extracting the art" above): every pixel is
+`C = A·F + (1−A)·B` for the measured ground `B`, solved per pixel for the
+ink's own colour and coverage.
 
-Then quantised to 96 colours, the same treatment the Laveora drawing had:
-753KB → **101KB** (slightly smaller than the 189KB file it replaces).
+This matters here for the same reason it did before — the stone is a *wash*
+only a few levels darker than the ground (`rgb(228,221,215)` against
+`rgb(229,229,229)`). A plain background knockout would have to either keep it
+as an opaque grey rectangle, visibly a different tone from our card, or
+discard it entirely. Recovered as ink it comes out around 6% alpha and simply
+takes on whatever paper sits behind it. Checked the same two ways as before:
+only **0.8%** of pixels are lighter than the ground (so "ink over paper" is
+the right model), and composited over magenta there is no cream halo.
 
-The source is 1810×869 and the target 1108×532 — both 2.083:1, so the
-aspect ratio is unchanged and no CSS or `width`/`height` attribute needed
-touching.
+Alpha below `6/255` is dropped, which kills the ground's grain and vignette —
+verified the outer corners land at exactly alpha 0.
 
-**Note on style:** this artwork is solid saturated gold, where the Laveora
-drawing was a pale line drawing whose stone was a transparent wash picking
-up the card's own paper. It reads considerably heavier on the cream card
-than its predecessor did. That's inherent to the supplied art, not the
-extraction — worth knowing if it ever looks too dominant next to the
-lighter Bismillah card above it.
+Resized 1804×868 → 1108×532 with **premultiplied** alpha, so transparent
+pixels can't bleed colour into the edges during resampling.
+
+## Palette: hue-normalised before quantising
+
+Un-premultiplying amplifies colour at low alpha — a 6%-alpha stone pixel
+recovers to a fully saturated orange. Those extremes are mathematically
+correct and composite correctly, but they eat palette slots on colours that
+barely affect the result. So before quantising, each pixel's RGB is blended
+toward the mean ink hue (`rgb(110,61,0)`) in proportion to how low its alpha
+is (full colour by alpha 90, mean hue at 0).
+
+Measured against the un-quantised composite over the card's `#F1E5D4`:
+
+| | size | max deviation | mean |
+|---|---|---|---|
+| straight quantise, 96 colours | 184KB | 40 | 3.17 |
+| straight quantise, 128 colours | 186KB | 30 | 3.09 |
+| **hue-normalised, 64 colours** | **133KB** | **21** | **3.76** |
+
+Smaller *and* lower worst-case error, for a negligible change in the mean.
+64/96/128 colours all converge on the same output, so 64 is used. Comes in
+under the 189KB Laveora file it restores the style of.
+
+## Aspect ratio
+
+Source crops to 1804×868 (2.078:1) against the target 1108×532 (2.083:1) —
+a 0.24% difference, absorbed in the resize. No CSS or `width`/`height`
+attribute changes.
+
+## An earlier, heavier version
+
+A solid saturated-gold rendering of this same hall was installed first and
+replaced. That file's transparency was fake — mode RGB with the grey/white
+checkerboard baked in as literal pixels — and it needed a completely
+different recovery (saturation threshold, then flood-fill inward from the
+border so light pixels *inside* the building survived, then a 1px erosion of
+the blend fringe). It read considerably heavier on the cream card than the
+pale wash the section was designed around. The line drawing here restores
+that lighter treatment.
