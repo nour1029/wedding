@@ -684,10 +684,9 @@ body.is-gated {
 
 .hero__words { top: 16.4%; }
 
-/* hero__words' three lines on a single modular scale (~1.3 ratio) rather
-   than arbitrary sizes: title largest as the heading, date and time equal
-   since they're both just event details — time was previously a full
-   step smaller than date, which read as an afterthought under it. */
+/* Two lines, not three: the title as the heading, then date and time
+   together on one line since they're a single fact (when). Sized on a
+   consistent scale rather than arbitrary values. */
 .hero__eyebrow {
   font-family: "Amiri", serif;
   color: var(--gold);
@@ -695,15 +694,20 @@ body.is-gated {
   line-height: 1;
 }
 
-.hero__date,
-.hero__time {
+.hero__when {
   font-size: 4.4cqw;
   letter-spacing: 0.04em;
   color: var(--gold);
+  margin-top: 0.35em;
 }
 
-.hero__date { margin-top: 0.35em; }
-.hero__time { margin-top: 0.25em; }
+/* Lighter than the values it divides, so it separates without competing.
+   Its own margin does the spacing — the surrounding whitespace, not the
+   glyph's own width, is what makes the two read as distinct. */
+.hero__when-sep {
+  margin-inline: 0.5em;
+  opacity: 0.55;
+}
 
 .hero__names {
   top: 33%;

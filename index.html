@@ -114,10 +114,13 @@
 
       <div class="hero__words">
         <p class="hero__eyebrow" lang="ar" dir="rtl" data-reveal>حَفْلُ زِفَافٍ</p>
-        <p class="hero__date display" data-reveal>
+        <!-- Date and time are one fact — when — so they share a line with a
+             separator rather than stacking as two. The divider is decorative
+             and hidden from assistive tech; the two <time> elements each keep
+             their own machine-readable datetime. -->
+        <p class="hero__when display" data-reveal>
           <time data-wedding="date"></time>
-        </p>
-        <p class="hero__time display" data-reveal>
+          <span class="hero__when-sep" aria-hidden="true">|</span>
           <time data-wedding="time"></time>
         </p>
       </div>
